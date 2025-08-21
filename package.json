@@ -1,0 +1,48 @@
+{
+  "name": "user-management-service",
+  "version": "0.1.0",
+  "description": "User management service with MySQL, Express and Sequelize",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "jest --runInBand",
+    "db:create": "node scripts/createDatabase.js",
+    "db:sync": "node scripts/syncModels.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abel-desu/Driver-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Abel-desu/Driver-App/issues"
+  },
+  "homepage": "https://github.com/Abel-desu/Driver-App#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "mysql2": "^3.14.3",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0",
+    "jest": "^30.0.5",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
+  "type": "module"
+}
