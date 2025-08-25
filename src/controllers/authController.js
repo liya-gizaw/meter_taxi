@@ -1,6 +1,5 @@
 import { validationResult } from 'express-validator';
 import { userService } from '../services/userService.js';
-import { adminUserService } from '../services/adminUserService.js';
 
 export const authController = {
   async register(req, res) {
@@ -130,7 +129,7 @@ export const authController = {
   async listUsers(req, res) {
     try {
       const { limit, offset } = req.query;
-      const result = await adminUserService.list({ limit, offset });
+      const result = await userService.listUsers({ limit, offset });
       return res.json(result);
     } catch (error) {
       return res.status(400).json({ message: error.message });
@@ -139,7 +138,7 @@ export const authController = {
 
   async getUserById(req, res) {
     try {
-      const user = await adminUserService.getById(req.params.id);
+      const user = await userService.adminGetUserById(req.params.id);
       if (!user) return res.status(404).json({ message: 'Not found' });
       return res.json(user);
     } catch (error) {

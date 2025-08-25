@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { authMiddleware } from '../middleware/auth.js';
-import { profileController } from '../controllers/profileController.js';
+import { profileController, profileValidations } from '../controllers/profileController.js';
+import { requirePermission } from '../middleware/permissions.js';
 
 const router = Router();
 
@@ -18,6 +19,13 @@ router.put(
   ],
   profileController.update
 );
+
+// Admin endpoints (moved from /admin/profiles)
+router.get('/', authMiddleware(['admin']), requirePermission('admin.profiles.list'), profileValidations.list, profileController.list);
+router.get('/:id', authMiddleware(['admin']), requirePermission('admin.profiles.get'), profileValidations.get, profileController.get);
+router.post('/', authMiddleware(['admin']), requirePermission('admin.profiles.create'), profileValidations.create, profileController.create);
+router.put('/:id', authMiddleware(['admin']), requirePermission('admin.profiles.update'), profileValidations.update, profileController.adminUpdate);
+router.delete('/:id', authMiddleware(['admin']), requirePermission('admin.profiles.delete'), profileValidations.remove, profileController.remove);
 
 export default router;
 
