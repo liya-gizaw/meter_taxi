@@ -145,4 +145,25 @@ export const userService = {
     await user.save();
     return { id: user.id, availability: user.availability };
   },
+  
+  async getUserById(userId) {
+    return User.findByPk(userId);
+  },
+
+  async updateUserById(userId, { email, phone, password }) {
+    const user = await User.findByPk(userId);
+    if (!user) throw new Error('User not found');
+    if (email !== undefined) user.email = email;
+    if (phone !== undefined) user.phone = phone;
+    if (password) user.password_hash = await hashPassword(password);
+    await user.save();
+    return user;
+  },
+
+  async deleteUserById(userId) {
+    const user = await User.findByPk(userId);
+    if (!user) return 0;
+    await user.destroy();
+    return 1;
+  },
 };

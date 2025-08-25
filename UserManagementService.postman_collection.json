@@ -1,79 +1,501 @@
 {
   "info": {
-    "name": "User Management Service - Permissions Setup",
-    "_postman_id": "abcd1234-efgh-5678-ijkl-9012mnop3456",
+    "name": "User Management Service - Full API (Refactored)",
+    "_postman_id": "f6f0e4aa-6f3f-4d3f-9b0c-84a2f3f0a001",
+    "description": "Complete collection for the User Management Service (Express Sequelize), with a refactored folder structure for better organization.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "variable": [
-    { "key": "baseUrl", "value": "http://localhost:4000" },
-    { "key": "token", "value": "" },
-    { "key": "role", "value": "admin" }
-  ],
+  "variable": [],
   "item": [
     {
-      "name": "Auth - Admin Login",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
-        },
-        "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api","auth","login"] }
-      },
-      "event": [
+      "name": "System Health",
+      "item": [
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "try {",
-              "  var data = pm.response.json();",
-              "  if (data && data.token) { pm.collectionVariables.set('token', data.token); }",
-              "} catch (e) {}"
-            ]
+          "name": "Health Check Endpoint",
+          "request": {
+            "method": "GET",
+            "description": "Health check",
+            "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
           }
         }
       ]
     },
     {
-      "name": "Create Permission",
-      "request": {
-        "method": "POST",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{token}}" },
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"key\": \"permissions.create\",\n  \"description\": \"Create new permissions\"\n}"
+      "name": "User Authentication",
+      "description": "Endpoints for user registration, login, and social authentication.",
+      "item": [
+        {
+          "name": "Register User with Email",
+          "request": {
+            "method": "POST",
+            "description": "Register user with email",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"passenger\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api","auth","register"] }
+          }
         },
-        "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] }
-      }
+        {
+          "name": "Log In User with Email and Password",
+          "request": {
+            "method": "POST",
+            "description": "Login with email and password",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api","auth","login"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "try {",
+                  "  const data = pm.response.json();",
+                  "  if (data && data.token) pm.collectionVariables.set('token', data.token);",
+                  "} catch (e) {}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register User with Phone Number",
+          "request": {
+            "method": "POST",
+            "description": "Register user with phone",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"12025550123\",\n  \"password\": \"password123\",\n  \"role\": \"driver\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register-phone", "host": ["{{baseUrl}}"], "path": ["api","auth","register-phone"] }
+          }
+        },
+        {
+          "name": "Log In User with Phone Number and Password",
+          "request": {
+            "method": "POST",
+            "description": "Login with phone and password",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"12025550123\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login-phone", "host": ["{{baseUrl}}"], "path": ["api","auth","login-phone"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "try {",
+                  "  const data = pm.response.json();",
+                  "  if (data && data.token) pm.collectionVariables.set('token', data.token);",
+                  "} catch (e) {}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Social Login (Creates or Logs in User)",
+          "request": {
+            "method": "POST",
+            "description": "Social login (creates or logs in user)",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"google\",\n  \"externalId\": \"ext-123\",\n  \"email\": \"social@example.com\",\n  \"role\": \"passenger\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/social", "host": ["{{baseUrl}}"], "path": ["api","auth","social"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "try {",
+                  "  const data = pm.response.json();",
+                  "  if (data && data.token) pm.collectionVariables.set('token', data.token);",
+                  "} catch (e) {}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     },
     {
-      "name": "Grant Permission to Admin",
-      "request": {
-        "method": "POST",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{token}}" },
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"key\": \"permissions.create\"\n}"
+      "name": "User Settings (Self)",
+      "description": "Endpoints for authenticated users to manage their own account, profile, and status.",
+      "item": [
+        {
+          "name": "Get Current Authenticated User's Details",
+          "request": {
+            "method": "GET",
+            "description": "Get current user",
+            "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api","auth","me"] }
+          }
         },
-        "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}/grant", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}","grant"] }
-      }
+        {
+          "name": "Update Current Authenticated User's Information",
+          "request": {
+            "method": "PUT",
+            "description": "Update current user",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"new@example.com\",\n  \"phone\": \"12025550123\",\n  \"password\": \"newpass123\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api","auth","me"] }
+          }
+        },
+        {
+          "name": "Delete Current Authenticated User",
+          "request": {
+            "method": "DELETE",
+            "description": "Delete current user",
+            "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api","auth","me"] }
+          }
+        },
+        {
+          "name": "Get Current User's Profile",
+          "request": {
+            "method": "GET",
+            "description": "Get current profile",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/profiles/me", "host": ["{{baseUrl}}"], "path": ["api","profiles","me"] }
+          }
+        },
+        {
+          "name": "Update Current User's Profile",
+          "request": {
+            "method": "PUT",
+            "description": "Update current profile",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"gender\": \"male\",\n  \"dob\": \"1990-01-01\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api","profiles"] }
+          }
+        },
+        {
+          "name": "Set Current User's Availability Status",
+          "request": {
+            "method": "PUT",
+            "description": "Set current user availability",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"availability\": \"online\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/users/me/availability", "host": ["{{baseUrl}}"], "path": ["api","users","me","availability"] }
+          }
+        }
+      ]
     },
     {
-      "name": "List Permissions",
-      "request": {
-        "method": "GET",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{token}}" }
-        ],
-        "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] }
-      }
+      "name": "User Documents (Self)",
+      "description": "Endpoints for authenticated users to manage their own documents.",
+      "item": [
+        {
+          "name": "Upload a User Document",
+          "request": {
+            "method": "POST",
+            "description": "Upload document",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "file", "type": "file", "src": [] },
+                { "key": "type", "type": "text", "value": "driver_license" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/api/documents/upload", "host": ["{{baseUrl}}"], "path": ["api","documents","upload"] }
+          }
+        },
+        {
+          "name": "List Documents Belonging to the Current User",
+          "request": {
+            "method": "GET",
+            "description": "List my documents",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/documents/me", "host": ["{{baseUrl}}"], "path": ["api","documents","me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Ratings",
+      "description": "Endpoints for creating and viewing user ratings.",
+      "item": [
+        {
+          "name": "Create a New User Rating",
+          "request": {
+            "method": "POST",
+            "description": "Create rating",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"ratee_user_id\": 1,\n  \"score\": 5,\n  \"comment\": \"Great ride\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/ratings", "host": ["{{baseUrl}}"], "path": ["api","ratings"] }
+          }
+        },
+        {
+          "name": "List Ratings for a Specific User",
+          "request": {
+            "method": "GET",
+            "description": "List ratings for user",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/ratings/user/1", "host": ["{{baseUrl}}"], "path": ["api","ratings","user","1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Management",
+      "description": "Administrative endpoints for managing users, profiles, documents, and permissions.",
+      "item": [
+        {
+          "name": "Admin Users",
+          "description": "Endpoints for administrators to manage user accounts.",
+          "item": [
+            {
+              "name": "List All Users (Admin Endpoint)",
+              "request": {
+                "method": "GET",
+                "description": "List users (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/admin/users", "host": ["{{baseUrl}}"], "path": ["api","admin","users"] }
+              }
+            },
+            {
+              "name": "Create a New User (Admin Endpoint)",
+              "request": {
+                "method": "POST",
+                "description": "Create user (admin)",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"driver\",\n  \"is_active\": true\n}"
+                },
+                "url": { "raw": "{{baseUrl}}/api/admin/users", "host": ["{{baseUrl}}"], "path": ["api","admin","users"] }
+              }
+            },
+            {
+              "name": "Get User Details by ID (Admin Endpoint)",
+              "request": {
+                "method": "GET",
+                "description": "Get user by id (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/admin/users/1", "host": ["{{baseUrl}}"], "path": ["api","admin","users","1"] }
+              }
+            },
+            {
+              "name": "Update User Information by ID (Admin Endpoint)",
+              "request": {
+                "method": "PUT",
+                "description": "Update user (admin)",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"driver\",\n  \"is_active\": true\n}"
+                },
+                "url": { "raw": "{{baseUrl}}/api/admin/users/1", "host": ["{{baseUrl}}"], "path": ["api","admin","users","1"] }
+              }
+            },
+            {
+              "name": "Delete User by ID (Admin Endpoint)",
+              "request": {
+                "method": "DELETE",
+                "description": "Delete user (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/admin/users/1", "host": ["{{baseUrl}}"], "path": ["api","admin","users","1"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin Profiles",
+          "description": "Endpoints for administrators to manage user profiles.",
+          "item": [
+            {
+              "name": "List All User Profiles (Admin Endpoint)",
+              "request": {
+                "method": "GET",
+                "description": "List profiles (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/admin/profiles", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles"] }
+              }
+            },
+            {
+              "name": "Create a New User Profile (Admin Endpoint)",
+              "request": {
+                "method": "POST",
+                "description": "Create profile (admin)",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": 1,\n  \"first_name\": \"AdminCreated\",\n  \"last_name\": \"User\"\n}"
+                },
+                "url": { "raw": "{{baseUrl}}/api/admin/profiles", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles"] }
+              }
+            },
+            {
+              "name": "Get Profile Details by ID (Admin Endpoint)",
+              "request": {
+                "method": "GET",
+                "description": "Get profile by id (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/admin/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles","1"] }
+              }
+            },
+            {
+              "name": "Update Profile Information by ID (Admin Endpoint)",
+              "request": {
+                "method": "PUT",
+                "description": "Update profile (admin)",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"Updated\",\n  \"last_name\": \"Profile\"\n}" },
+                "url": { "raw": "{{baseUrl}}/api/admin/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles","1"] }
+              }
+            },
+            {
+              "name": "Delete Profile by ID (Admin Endpoint)",
+              "request": {
+                "method": "DELETE",
+                "description": "Delete profile (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/admin/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles","1"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin Document Review",
+          "description": "Endpoints for administrators to review and manage user-submitted documents.",
+          "item": [
+            {
+              "name": "Get Document Details by ID (Admin Access)",
+              "request": {
+                "method": "GET",
+                "description": "Get document by id (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/documents/1", "host": ["{{baseUrl}}"], "path": ["api","documents","1"] }
+              }
+            },
+            {
+              "name": "List Documents for a Specific User by ID (Admin Access)",
+              "request": {
+                "method": "GET",
+                "description": "List documents by user id (admin)",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/documents/user/1", "host": ["{{baseUrl}}"], "path": ["api","documents","user","1"] }
+              }
+            },
+            {
+              "name": "Review and Update Document Status (Admin Access)",
+              "request": {
+                "method": "PUT",
+                "description": "Review document (admin)",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": { "mode": "raw", "raw": "{\n  \"status\": \"approved\",\n  \"review_note\": \"Looks good\"\n}" },
+                "url": { "raw": "{{baseUrl}}/api/documents/1/review", "host": ["{{baseUrl}}"], "path": ["api","documents","1","review"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin Permissions Management",
+          "description": "Endpoints for administrators to create, list, grant, and revoke system permissions.",
+          "item": [
+            {
+              "name": "Create a New Permission",
+              "request": {
+                "method": "POST",
+                "description": "Create permission",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": { "mode": "raw", "raw": "{\n  \"key\": \"documents.upload\",\n  \"description\": \"Allow uploading documents\"\n}" },
+                "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] }
+              }
+            },
+            {
+              "name": "List All Available Permissions",
+              "request": {
+                "method": "GET",
+                "description": "List permissions",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] }
+              }
+            },
+            {
+              "name": "Grant a Specific Permission to a Role",
+              "request": {
+                "method": "POST",
+                "description": "Grant permission to role",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": { "mode": "raw", "raw": "{\n  \"key\": \"documents.upload\"\n}" },
+                "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}/grant", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}","grant"] }
+              }
+            },
+            {
+              "name": "Revoke a Specific Permission from a Role",
+              "request": {
+                "method": "POST",
+                "description": "Revoke permission from role",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": { "mode": "raw", "raw": "{\n  \"key\": \"documents.upload\"\n}" },
+                "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}/revoke", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}","revoke"] }
+              }
+            },
+            {
+              "name": "List Permissions for a Specific Role",
+              "request": {
+                "method": "GET",
+                "description": "List role permissions",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}"] }
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

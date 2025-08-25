@@ -3,9 +3,9 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
-import routes from './routes/index.js';
-import { sequelize } from './models/index.js';
-import './models/associations.js';
+import routes from './src/routes/index.js';
+import { sequelize } from './src/models/index.js';
+import './src/models/associations.js';
 
 const app = express();
 
@@ -16,7 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the User Management Service API');
+});
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
 app.use('/api', routes);
 
 async function start() {

@@ -1,33 +1,34 @@
 {
-  "name": "user-management-service",
+  "name": "usermanagementservice",
   "version": "0.1.0",
   "description": "User management service with MySQL, Express and Sequelize",
-  "main": "src/server.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "test": "jest --runInBand",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "jest runInBand",
     "db:create": "node scripts/createDatabase.js",
-    "db:sync": "node scripts/syncModels.js"
+    "db:sync": "node scripts/syncModels.js",
+    "db:seed:permissions": "node scripts/seedPermissions.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Abel-desu/Driver-App.git"
+    "url": "githttps://github.com/Abeldesu/DriverApp.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Abel-desu/Driver-App/issues"
+    "url": "https://github.com/Abeldesu/DriverApp/issues"
   },
-  "homepage": "https://github.com/Abel-desu/Driver-App#readme",
+  "homepage": "https://github.com/Abeldesu/DriverApp#readme",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "express-validator": "^7.2.1",
+    "express-validator": "^7.0.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
@@ -36,7 +37,7 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
-    "cross-env": "^10.0.0",
+    "cross-env": "^7.0.3",
     "jest": "^30.0.5",
     "nodemon": "^3.1.10",
     "supertest": "^7.1.4"

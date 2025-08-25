@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
+import { authMiddleware } from '../middleware/auth.js';
+import { requirePermission } from '../middleware/permissions.js';
 import { authController } from '../controllers/authController.js';
 
 const router = Router();
@@ -46,5 +48,23 @@ router.post(
   ],
   authController.socialLogin
 );
+
+// Self CRUD endpoints
+router.get('/me', authMiddleware(), authController.me);
+router.put(
+  '/me',
+  authMiddleware(),
+  [
+    body('email').optional().isEmail(),
+    body('phone').optional().isString().isLength({ min: 3, max: 20 }),
+    body('password').optional().isLength({ min: 6 })
+  ],
+  authController.updateMe
+);
+router.delete('/me', authMiddleware(), authController.deleteMe);
+
+// Admin: list all users and get user by id
+router.get('/users', authMiddleware(['admin']), requirePermission('admin.auth.users.list'), authController.listUsers);
+router.get('/users/:id', authMiddleware(['admin']), requirePermission('admin.auth.users.get'), authController.getUserById);
 
 export default router;

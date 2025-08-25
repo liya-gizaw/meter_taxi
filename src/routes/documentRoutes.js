@@ -8,7 +8,7 @@ const router = Router();
     router.post(
     '/upload',
     authMiddleware(['admin','driver','passenger']),
-    requirePermission('admin.documents.upload'),
+    requirePermission('documents.upload'),
     upload.single('file'),
     documentValidations.upload,
     documentController.upload
