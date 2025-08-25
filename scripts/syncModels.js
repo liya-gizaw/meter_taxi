@@ -1,18 +1,16 @@
-import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
+import { sequelize } from '../src/models/index.js';
 
-dotenv.config();
-
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST || "127.0.0.1",
-    port: parseInt(process.env.DB_PORT) || 3306,
-    dialect: "mysql",        
-    logging: console.log,      // optional, for debug
+async function syncModels() {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connected!');
+    await sequelize.sync({ alter: true }); // alter:true updates existing tables
+    console.log('Models synced!');
+    process.exit(0);
+  } catch (err) {
+    console.error('❌ Error syncing database:', err);
+    process.exit(1);
   }
-);
+}
 
-export default sequelize;
+syncModels();

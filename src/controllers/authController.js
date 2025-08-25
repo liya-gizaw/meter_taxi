@@ -8,8 +8,8 @@ export const authController = {
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      const { email, password, role, language } = req.body;
-      const result = await userService.registerWithEmail({ email, password, role, language });
+      const { email, password, role } = req.body;
+      const result = await userService.registerWithEmail({ email, password, role });
       return res.status(201).json(result);
     } catch (error) {
       return res.status(400).json({ message: error.message });
@@ -29,5 +29,46 @@ export const authController = {
       return res.status(400).json({ message: error.message });
     }
   },
-};
 
+  async registerPhone(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const { phone, password, role, language } = req.body;
+      const result = await userService.registerWithPhone({ phone, password, role, language });
+      return res.status(201).json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  },
+
+  async loginPhone(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const { phone, password } = req.body;
+      const result = await userService.loginWithPhone({ phone, password });
+      return res.json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  },
+
+  async socialLogin(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const { provider, externalId, email, phone, role, language } = req.body;
+      const result = await userService.loginWithSocial({ provider, externalId, email, phone, role});
+      return res.json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  },
+};

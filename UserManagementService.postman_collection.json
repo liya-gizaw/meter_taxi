@@ -1,0 +1,79 @@
+{
+  "info": {
+    "name": "User Management Service - Permissions Setup",
+    "_postman_id": "abcd1234-efgh-5678-ijkl-9012mnop3456",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "token", "value": "" },
+    { "key": "role", "value": "admin" }
+  ],
+  "item": [
+    {
+      "name": "Auth - Admin Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api","auth","login"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "try {",
+              "  var data = pm.response.json();",
+              "  if (data && data.token) { pm.collectionVariables.set('token', data.token); }",
+              "} catch (e) {}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create Permission",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"key\": \"permissions.create\",\n  \"description\": \"Create new permissions\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] }
+      }
+    },
+    {
+      "name": "Grant Permission to Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"key\": \"permissions.create\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}/grant", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}","grant"] }
+      }
+    },
+    {
+      "name": "List Permissions",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] }
+      }
+    }
+  ]
+}

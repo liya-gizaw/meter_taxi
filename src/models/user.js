@@ -6,19 +6,17 @@ export class User extends Model {}
 User.init(
   {
     id: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.BIGINT.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
     },
     phone: {
       type: DataTypes.STRING(20),
-      unique: true,
       allowNull: true,
       validate: { len: [3, 20] },
     },
     email: {
       type: DataTypes.STRING(100),
-      unique: true,
       allowNull: true,
       validate: { isEmail: true },
     },
@@ -36,15 +34,16 @@ User.init(
       allowNull: false,
       defaultValue: 'passenger',
     },
-    language: {
-      type: DataTypes.ENUM('am', 'en', 'om', 'ti', 'af'),
-      allowNull: false,
-      defaultValue: 'en',
-    },
+
     is_active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    availability: {
+      type: DataTypes.ENUM('online', 'offline'),
+      allowNull: false,
+      defaultValue: 'offline',
     },
     created_at: {
       type: DataTypes.DATE,
@@ -61,5 +60,10 @@ User.init(
     sequelize,
     tableName: 'users',
     timestamps: false,
+    indexes: [
+      { unique: true, fields: ['phone'], name: 'users_phone_unique' },
+      { unique: true, fields: ['email'], name: 'users_email_unique' },
+    ],
   }
 );
+

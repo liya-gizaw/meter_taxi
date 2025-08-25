@@ -6,13 +6,16 @@ export class Profile extends Model {}
 Profile.init(
   {
     id: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.BIGINT.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
     },
     user_id: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.BIGINT.UNSIGNED,
       allowNull: false,
+      references: { model: 'users', key: 'id' },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
     first_name: {
       type: DataTypes.STRING(50),
@@ -55,6 +58,3 @@ Profile.init(
     timestamps: false,
   }
 );
-
-
-
