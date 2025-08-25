@@ -278,7 +278,7 @@
                 "method": "GET",
                 "description": "List users (admin)",
                 "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-                "url": { "raw": "{{baseUrl}}/api/admin/users", "host": ["{{baseUrl}}"], "path": ["api","admin","users"] }
+                "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] }
               }
             },
             {
@@ -294,7 +294,7 @@
                   "mode": "raw",
                   "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"driver\",\n  \"is_active\": true\n}"
                 },
-                "url": { "raw": "{{baseUrl}}/api/admin/users", "host": ["{{baseUrl}}"], "path": ["api","admin","users"] }
+                "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] }
               }
             },
             {
@@ -303,7 +303,7 @@
                 "method": "GET",
                 "description": "Get user by id (admin)",
                 "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-                "url": { "raw": "{{baseUrl}}/api/admin/users/1", "host": ["{{baseUrl}}"], "path": ["api","admin","users","1"] }
+                "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api","users","1"] }
               }
             },
             {
@@ -319,7 +319,7 @@
                   "mode": "raw",
                   "raw": "{\n  \"role\": \"driver\",\n  \"is_active\": true\n}"
                 },
-                "url": { "raw": "{{baseUrl}}/api/admin/users/1", "host": ["{{baseUrl}}"], "path": ["api","admin","users","1"] }
+                "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api","users","1"] }
               }
             },
             {
@@ -328,7 +328,7 @@
                 "method": "DELETE",
                 "description": "Delete user (admin)",
                 "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-                "url": { "raw": "{{baseUrl}}/api/admin/users/1", "host": ["{{baseUrl}}"], "path": ["api","admin","users","1"] }
+                "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api","users","1"] }
               }
             }
           ]
@@ -343,7 +343,7 @@
                 "method": "GET",
                 "description": "List profiles (admin)",
                 "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-                "url": { "raw": "{{baseUrl}}/api/admin/profiles", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles"] }
+                "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api","profiles"] }
               }
             },
             {
@@ -359,7 +359,7 @@
                   "mode": "raw",
                   "raw": "{\n  \"user_id\": 1,\n  \"first_name\": \"AdminCreated\",\n  \"last_name\": \"User\"\n}"
                 },
-                "url": { "raw": "{{baseUrl}}/api/admin/profiles", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles"] }
+                "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api","profiles"] }
               }
             },
             {
@@ -368,7 +368,7 @@
                 "method": "GET",
                 "description": "Get profile by id (admin)",
                 "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-                "url": { "raw": "{{baseUrl}}/api/admin/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles","1"] }
+                "url": { "raw": "{{baseUrl}}/api/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","profiles","1"] }
               }
             },
             {
@@ -381,7 +381,7 @@
                   { "key": "Content-Type", "value": "application/json" }
                 ],
                 "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"Updated\",\n  \"last_name\": \"Profile\"\n}" },
-                "url": { "raw": "{{baseUrl}}/api/admin/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles","1"] }
+                "url": { "raw": "{{baseUrl}}/api/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","profiles","1"] }
               }
             },
             {
@@ -390,7 +390,7 @@
                 "method": "DELETE",
                 "description": "Delete profile (admin)",
                 "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-                "url": { "raw": "{{baseUrl}}/api/admin/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","admin","profiles","1"] }
+                "url": { "raw": "{{baseUrl}}/api/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","profiles","1"] }
               }
             }
           ]
