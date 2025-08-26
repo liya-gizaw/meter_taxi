@@ -59,6 +59,27 @@ export const profileController = {
     await profileService.remove(req.params.id);
     return res.status(204).send();
   },
+
+  // Self CRUD create/delete
+  async createMe(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+      const created = await profileService.createByUserId(req.user.id, req.body);
+      return res.status(201).json({ profile: created });
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  },
+
+  async deleteMe(req, res) {
+    try {
+      await profileService.removeByUserId(req.user.id);
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  },
 };
 
 export const profileValidations = {

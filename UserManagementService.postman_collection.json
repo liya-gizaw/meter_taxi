@@ -22,106 +22,66 @@
     {
       "name": "Auth",
       "item": [
-        {
-          "name": "Register (email)",
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"passenger\"\n}" },
-            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api","auth","register"] }
-          }
-        },
-        {
-          "name": "Login (email)",
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}" },
-            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api","auth","login"] }
-          },
-          "event": [{ "listen": "test", "script": { "exec": ["try {","  const data = pm.response.json();","  if (data && data.token) pm.collectionVariables.set('token', data.token);","} catch (e) {}"] } }]
-        },
-        {
-          "name": "Register (phone)",
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"12025550123\",\n  \"password\": \"password123\",\n  \"role\": \"driver\"\n}" },
-            "url": { "raw": "{{baseUrl}}/api/auth/register-phone", "host": ["{{baseUrl}}"], "path": ["api","auth","register-phone"] }
-          }
-        },
-        {
-          "name": "Login (phone)",
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"12025550123\",\n  \"password\": \"password123\"\n}" },
-            "url": { "raw": "{{baseUrl}}/api/auth/login-phone", "host": ["{{baseUrl}}"], "path": ["api","auth","login-phone"] }
-          },
-          "event": [{ "listen": "test", "script": { "exec": ["try {","  const data = pm.response.json();","  if (data && data.token) pm.collectionVariables.set('token', data.token);","} catch (e) {}"] } }]
-        },
-        {
-          "name": "Social Login",
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"provider\": \"google\",\n  \"email\": \"social@example.com\",\n  \"role\": \"passenger\"\n}" },
-            "url": { "raw": "{{baseUrl}}/api/auth/social", "host": ["{{baseUrl}}"], "path": ["api","auth","social"] }
-          }
-        },
-        { "name": "Me (get)", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api","auth","me"] } } },
-        { "name": "Me (update)", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"email\": \"new@example.com\"\n}"}, "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api","auth","me"] } } },
-        { "name": "Me (delete)", "request": { "method": "DELETE", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api","auth","me"] } } },
-        { "name": "Admin list users", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/auth/users", "host": ["{{baseUrl}}"], "path": ["api","auth","users"] } } },
-        { "name": "Admin get user by id", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/auth/users/1", "host": ["{{baseUrl}}"], "path": ["api","auth","users","1"] } } }
+        {"name":"Register (email)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"passenger\"\n}"},"url":{"raw":"{{baseUrl}}/api/auth/register","host":["{{baseUrl}}"],"path":["api","auth","register"]}}},
+        {"name":"Login (email)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"},"url":{"raw":"{{baseUrl}}/api/auth/login","host":["{{baseUrl}}"],"path":["api","auth","login"]}},"event":[{"listen":"test","script":{"exec":["try {","  const data = pm.response.json();","  if (data && data.token) pm.collectionVariables.set('token', data.token);","} catch (e) {}"]}}]},
+        {"name":"Register (phone)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"phone\": \"12025550123\",\n  \"password\": \"password123\",\n  \"role\": \"driver\"\n}"},"url":{"raw":"{{baseUrl}}/api/auth/register-phone","host":["{{baseUrl}}"],"path":["api","auth","register-phone"]}}},
+        {"name":"Login (phone)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"phone\": \"12025550123\",\n  \"password\": \"password123\"\n}"},"url":{"raw":"{{baseUrl}}/api/auth/login-phone","host":["{{baseUrl}}"],"path":["api","auth","login-phone"]}},"event":[{"listen":"test","script":{"exec":["try {","  const data = pm.response.json();","  if (data && data.token) pm.collectionVariables.set('token', data.token);","} catch (e) {}"]}}]},
+        {"name":"Social Login","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"provider\": \"google\",\n  \"email\": \"social@example.com\",\n  \"role\": \"passenger\"\n}"},"url":{"raw":"{{baseUrl}}/api/auth/social","host":["{{baseUrl}}"],"path":["api","auth","social"]}}},
+        {"name":"Me (get)","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/auth/me","host":["{{baseUrl}}"],"path":["api","auth","me"]}}},
+        {"name":"Me (update)","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"email\": \"new@example.com\"\n}"},"url":{"raw":"{{baseUrl}}/api/auth/me","host":["{{baseUrl}}"],"path":["api","auth","me"]}}},
+        {"name":"Me (delete)","request":{"method":"DELETE","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/auth/me","host":["{{baseUrl}}"],"path":["api","auth","me"]}}},
+        {"name":"Admin list users","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/auth/users","host":["{{baseUrl}}"],"path":["api","auth","users"]}}},
+        {"name":"Admin get user by id","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/auth/users/1","host":["{{baseUrl}}"],"path":["api","auth","users","1"]}}}
       ]
     },
     {
       "name": "Users",
       "item": [
-        { "name": "Set availability", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"availability\": \"online\"\n}"}, "url": { "raw": "{{baseUrl}}/api/users/me/availability", "host": ["{{baseUrl}}"], "path": ["api","users","me","availability"] } } },
-        { "name": "Admin list users", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] } } },
-        { "name": "Admin create user", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"driver\",\n  \"is_active\": true\n}"}, "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] } } },
-        { "name": "Admin get user", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api","users","1"] } } },
-        { "name": "Admin update user", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"role\": \"driver\",\n  \"is_active\": true\n}"}, "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api","users","1"] } } },
-        { "name": "Admin delete user", "request": { "method": "DELETE", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/users/1", "host": ["{{baseUrl}}"], "path": ["api","users","1"] } } }
+        {"name":"Set availability","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"availability\": \"online\"\n}"},"url":{"raw":"{{baseUrl}}/api/users/me/availability","host":["{{baseUrl}}"],"path":["api","users","me","availability"]}}},
+        {"name":"Admin list users","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/users","host":["{{baseUrl}}"],"path":["api","users"]}}},
+        {"name":"Admin create user","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"driver\",\n  \"is_active\": true\n}"},"url":{"raw":"{{baseUrl}}/api/users","host":["{{baseUrl}}"],"path":["api","users"]}}},
+        {"name":"Admin get user","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/users/1","host":["{{baseUrl}}"],"path":["api","users","1"]}}},
+        {"name":"Admin update user","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"role\": \"driver\",\n  \"is_active\": true\n}"},"url":{"raw":"{{baseUrl}}/api/users/1","host":["{{baseUrl}}"],"path":["api","users","1"]}}},
+        {"name":"Admin delete user","request":{"method":"DELETE","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/users/1","host":["{{baseUrl}}"],"path":["api","users","1"]}}}
       ]
     },
     {
       "name": "Profiles",
       "item": [
-        { "name": "Get my profile", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/profiles/me", "host": ["{{baseUrl}}"], "path": ["api","profiles","me"] } } },
-        { "name": "Update my profile", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\"\n}"}, "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api","profiles"] } } },
-        { "name": "Admin list profiles", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api","profiles"] } } },
-        { "name": "Admin create profile", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"user_id\": 1,\n  \"first_name\": \"AdminCreated\"\n}"}, "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api","profiles"] } } },
-        { "name": "Admin get profile", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","profiles","1"] } } },
-        { "name": "Admin update profile", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"first_name\": \"Updated\"\n}"}, "url": { "raw": "{{baseUrl}}/api/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","profiles","1"] } } },
-        { "name": "Admin delete profile", "request": { "method": "DELETE", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/profiles/1", "host": ["{{baseUrl}}"], "path": ["api","profiles","1"] } } }
+        {"name":"Create my profile","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\"\n}"},"url":{"raw":"{{baseUrl}}/api/profiles/me","host":["{{baseUrl}}"],"path":["api","profiles","me"]}}},
+        {"name":"Get my profile","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/profiles/me","host":["{{baseUrl}}"],"path":["api","profiles","me"]}}},
+        {"name":"Update my profile","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\"\n}"},"url":{"raw":"{{baseUrl}}/api/profiles","host":["{{baseUrl}}"],"path":["api","profiles"]}}},
+        {"name":"Delete my profile","request":{"method":"DELETE","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/profiles/me","host":["{{baseUrl}}"],"path":["api","profiles","me"]}}},
+        {"name":"Admin list profiles","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/profiles","host":["{{baseUrl}}"],"path":["api","profiles"]}}},
+        {"name":"Admin create profile","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"user_id\": 1,\n  \"first_name\": \"AdminCreated\"\n}"},"url":{"raw":"{{baseUrl}}/api/profiles","host":["{{baseUrl}}"],"path":["api","profiles"]}}},
+        {"name":"Admin get profile","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/profiles/1","host":["{{baseUrl}}"],"path":["api","profiles","1"]}}},
+        {"name":"Admin update profile","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"first_name\": \"Updated\"\n}"},"url":{"raw":"{{baseUrl}}/api/profiles/1","host":["{{baseUrl}}"],"path":["api","profiles","1"]}}},
+        {"name":"Admin delete profile","request":{"method":"DELETE","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/profiles/1","host":["{{baseUrl}}"],"path":["api","profiles","1"]}}}
       ]
     },
     {
       "name": "Documents",
       "item": [
-        { "name": "Upload document", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/documents/upload", "host": ["{{baseUrl}}"], "path": ["api","documents","upload"] } } },
-        { "name": "List my documents", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/documents/me", "host": ["{{baseUrl}}"], "path": ["api","documents","me"] } } },
-        { "name": "Review document (admin)", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"status\": \"approved\",\n  \"review_note\": \"Looks good\"\n}"}, "url": { "raw": "{{baseUrl}}/api/documents/1/review", "host": ["{{baseUrl}}"], "path": ["api","documents","1","review"] } } }
+        {"name":"Upload document","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/documents/upload","host":["{{baseUrl}}"],"path":["api","documents","upload"]}}},
+        {"name":"List my documents","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/documents/me","host":["{{baseUrl}}"],"path":["api","documents","me"]}}},
+        {"name":"Review document (admin)","request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"status\": \"approved\",\n  \"review_note\": \"Looks good\"\n}"},"url":{"raw":"{{baseUrl}}/api/documents/1/review","host":["{{baseUrl}}"],"path":["api","documents","1","review"]}}}
       ]
     },
     {
       "name": "Permissions",
       "item": [
-        { "name": "Create permission", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"key\": \"documents.upload\",\n  \"description\": \"Allow uploading documents\"\n}"}, "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] } } },
-        { "name": "List permissions", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/permissions", "host": ["{{baseUrl}}"], "path": ["api","permissions"] } } },
-        { "name": "Grant permission to role", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"key\": \"documents.upload\"\n}"}, "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}/grant", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}","grant"] } } },
-        { "name": "Revoke permission from role", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"key\": \"documents.upload\"\n}"}, "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}/revoke", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}","revoke"] } } },
-        { "name": "List role permissions", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/permissions/{{role}}", "host": ["{{baseUrl}}"], "path": ["api","permissions","{{role}}"] } } }
+        {"name":"Create permission","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"key\": \"documents.upload\",\n  \"description\": \"Allow uploading documents\"\n}"},"url":{"raw":"{{baseUrl}}/api/permissions","host":["{{baseUrl}}"],"path":["api","permissions"]}}},
+        {"name":"List permissions","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/permissions","host":["{{baseUrl}}"],"path":["api","permissions"]}}},
+        {"name":"Grant permission to role","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"key\": \"documents.upload\"\n}"},"url":{"raw":"{{baseUrl}}/api/permissions/{{role}}/grant","host":["{{baseUrl}}"],"path":["api","permissions","{{role}}","grant"]}}},
+        {"name":"Revoke permission from role","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"key\": \"documents.upload\"\n}"},"url":{"raw":"{{baseUrl}}/api/permissions/{{role}}/revoke","host":["{{baseUrl}}"],"path":["api","permissions","{{role}}","revoke"]}}},
+        {"name":"List role permissions","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/permissions/{{role}}","host":["{{baseUrl}}"],"path":["api","permissions","{{role}}"]}}}
       ]
     },
     {
       "name": "Ratings",
       "item": [
-        { "name": "Create rating", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"ratee_user_id\": 1,\n  \"score\": 5,\n  \"comment\": \"Great ride\"\n}"}, "url": { "raw": "{{baseUrl}}/api/ratings", "host": ["{{baseUrl}}"], "path": ["api","ratings"] } } },
-        { "name": "List ratings for user", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": { "raw": "{{baseUrl}}/api/ratings/user/1", "host": ["{{baseUrl}}"], "path": ["api","ratings","user","1"] } } }
+        {"name":"Create rating","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"ratee_user_id\": 1,\n  \"score\": 5,\n  \"comment\": \"Great ride\"\n}"},"url":{"raw":"{{baseUrl}}/api/ratings","host":["{{baseUrl}}"],"path":["api","ratings"]}}},
+        {"name":"List ratings for user","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":{"raw":"{{baseUrl}}/api/ratings/user/1","host":["{{baseUrl}}"],"path":["api","ratings","user","1"]}}}
       ]
     }
   ]

@@ -106,5 +106,16 @@ export const profileService = {
     await profile.save();
     return profile;
   },
+
+  async createByUserId(userId, data) {
+    const existing = await Profile.findOne({ where: { user_id: userId } });
+    if (existing) throw new Error('Profile already exists');
+    const created = await Profile.create({ user_id: userId, ...data });
+    return created;
+  },
+
+  async removeByUserId(userId) {
+    return Profile.destroy({ where: { user_id: userId } });
+  },
 };
 
