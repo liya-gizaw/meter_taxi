@@ -23,3 +23,9 @@ Rating.belongsTo(User, { foreignKey: 'ratee_user_id', as: 'ratee' });
 
 export { User, Profile, Permission, RolePermission, UserDocument, Rating };
 
+/**
+ * Composite aggregate shape for a user with related profile and documents.
+ * This is not a Sequelize model; it is a plain JS object structure returned by domain functions.
+ */
+export const _UserAggregateShape = undefined;
+
